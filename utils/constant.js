@@ -1,0 +1,3 @@
+const NEWS_STATUS = {AVAILABLE :1 , UNAVAILABLE : 0};
+const ACCOUNT_STATUS = {BLOCKED: false, ACTIVE: true};
+module.exports =  {NEWS_STATUS,ACCOUNT_STATUS}
