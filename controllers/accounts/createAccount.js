@@ -14,7 +14,6 @@ const register = async (req, res) => {
     const account = await getAccount({ email: bodyData.email });
     if (account) return BadRequest(res, EXISTED_ACCOUNT);
     const accountData = hashPasswordOfAccount(bodyData);
-    console.log(accountData);
     const result = await insertAccount(accountData);
     res.status(201).json(result);
   } catch (error) {

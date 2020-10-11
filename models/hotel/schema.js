@@ -1,5 +1,3 @@
-const { schema } = require(".");
-
 const Schema = require("mongoose").Schema;
 
 const hotelSchema = new Schema({
@@ -9,6 +7,7 @@ const hotelSchema = new Schema({
   },
   name: { type: String, require: true },
   address: { type: String, require: true },
+  city: { type: String, require: true },
   email: {
     type: String,
     required: true,

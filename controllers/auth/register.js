@@ -25,7 +25,6 @@ const register = async (req, res) => {
     bodyData.isAdmin = isAdmin;
     bodyData.role = role;
     const accountData = hashPasswordOfAccount(bodyData);
-    console.log(accountData)
     const savingAccountResult = await insertAccount(accountData);
     const userInfoData = {
       id_account: savingAccountResult._id,
