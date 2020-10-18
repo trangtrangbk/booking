@@ -19,9 +19,11 @@ const hotelSchema = new Schema({
   description: {
     type: String,
   },
-  image: {
-    type: Schema.Types.Array,
-  },
+  image: 
+    [{
+      type: String
+  }]
+  ,
   rate: {
     type: Number,
   },
