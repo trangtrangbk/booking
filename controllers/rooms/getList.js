@@ -4,7 +4,7 @@ const { InternalServerError } = require("../../utils/ResponseHelper");
 
 const get = async (req, res) => {
   try {
-    let arr = await getRooms();
+    let arr = await getRooms(req.body.filter);
     res.send(arr);
   } catch (e) {
     console.log(e);

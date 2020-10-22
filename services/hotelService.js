@@ -9,8 +9,8 @@ const getHotel = async (params) => {
   return await Hotel.findOne(params);
 };
 
-const getHotels = async () => {
-  return await Hotel.find();
+const getHotels = async (filter = {}) => {
+  return await Hotel.find(filter);
 };
 const deleteHotelById = async (id) => {
   return await Hotel.findByIdAndDelete(id);
