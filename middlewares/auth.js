@@ -36,8 +36,9 @@ const requiredLogin = (req, res, next) => {
 const requiredHotelOwner = async (req, res, next) => {
   requiredLogin(req, res, async () => {
     try {
-      const hotel = getHotel({_id : req.body.hotelId})
-      if (req.decoded.id === hotel.accountId) {
+      const hotel = await getHotel({_id : req.body.hotelId})
+      console.log(req.decoded, hotel);
+      if (req.decoded.id == hotel.accountId) {
         next();
       } else {
         return Forbidden(res, "This action requires owner!");
