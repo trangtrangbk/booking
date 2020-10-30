@@ -7,6 +7,8 @@ const get = async (req, res) => {
   try {
     const {id} = req.params
     let arr = await getAccount({_id : id});
+    delete arr._doc.hash_password;
+    delete arr._doc.salt_password;
     res.send(arr);
   } catch (e) {
     console.log(e);

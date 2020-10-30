@@ -5,7 +5,7 @@ const {
 } = require("../../utils/ResponseHelper");
 const { getHashString, getRandomString } = require("../../utils/HashHelper");
 
-const EXISTED_ACCOUNT = "This account existed";
+const EXISTED_ACCOUNT = "This email has been used for another account";
 
 const register = async (req, res) => {
   const bodyData = getAccountFromBodyRequest(req);
@@ -28,9 +28,8 @@ const hashPasswordOfAccount = (account) => {
   const accountData = {
     email: account.email,
     name: account.name,
-    isAdmin: account.isAdmin,
-    role: account.role,
     hash_password: hashPassword,
+    avatar : account.avatar,
     salt_password: saltPassword,
     status: true,
   };
@@ -39,7 +38,7 @@ const hashPasswordOfAccount = (account) => {
 
 const getAccountFromBodyRequest = (req) => {
   if (!req.body) return null;
-  let { email, name, password } = req.body;
+  let { email, name, password, avatar } = req.body;
   if (email && password) {
     email = email.trim();
     name = name.trim();
@@ -47,7 +46,7 @@ const getAccountFromBodyRequest = (req) => {
     if (email == "" || name == "" || password == "") {
       return null;
     }
-    return { email, name, password };
+    return { email, name, password,avatar };
   } else {
     return null;
   }

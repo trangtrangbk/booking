@@ -22,8 +22,8 @@ const requiredLogin = (req, res, next) => {
         }
         req.decoded = decoded;
 
-        const {status} = await getAccount({_id :decoded.id});
-        if (!status) return Unauthorized(res, LockedUser);
+        const user = await getAccount({_id :decoded.id});
+        if (!user.status) return Unauthorized(res, LockedUser);
         next();
       });
     } else Forbidden(res, "Not found Token !");
@@ -35,15 +35,16 @@ const requiredLogin = (req, res, next) => {
 
 const requiredHotelOwner = async (req, res, next) => {
   requiredLogin(req, res, async () => {
+
     try {
-      const hotel = await getHotel({_id : req.body.hotelId})
-      console.log(req.decoded, hotel);
+      const hotel = await getHotel({_id : req.body.hotelId || req.query.hotelId})
       if (req.decoded.id == hotel.accountId) {
         next();
       } else {
         return Forbidden(res, "This action requires owner!");
       }
     } catch (e) {
+      console.log(e);
       InternalServerError(res);
     }
   });

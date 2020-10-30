@@ -7,16 +7,28 @@ const roomSchema = new Schema({
   },
   name: { type: String, require: true },
   status: {
-    type: Number,
+    type: String,
   },
   description: {
     type: String,
   },
-  price : Number,
-  area : Number,
-  image: {
-    type: Schema.Types.Array,
-  },
+  price: Number,
+  area: Number,
+  amenities: [
+    {
+      type: String,
+    },
+  ],
+  rules: [
+    {
+      type: String,
+    },
+  ],
+  image: [
+    {
+      type: String,
+    },
+  ],
   created: { type: Date, default: Date.now },
   updated: { type: Date, default: Date.now },
 });

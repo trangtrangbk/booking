@@ -7,7 +7,6 @@ const get = async (req, res) => {
     const {id} = req.params
     let arr = await getHotel({_id : id});
     const rooms = await getRooms({hotelId : arr._id})
-    console.log({...arr});
     res.send({...arr._doc, rooms});
   } catch (e) {
     console.log(e);

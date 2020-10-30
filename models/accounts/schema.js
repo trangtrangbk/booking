@@ -6,6 +6,7 @@ const accountSchema = new Schema({
     required: true,
     unique: true,
   },
+  avatar: { type: String },
   name: { type: String, require: true },
   hash_password: {
     type: String,

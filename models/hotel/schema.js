@@ -24,6 +24,11 @@ const hotelSchema = new Schema({
       type: String
   }]
   ,
+  amenities: [
+    {
+      type: String,
+    },
+  ],
   rate: {
     type: Number,
   },

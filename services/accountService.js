@@ -10,7 +10,8 @@ const getAccount = async (params) => {
 };
 
 const getAccounts = async () => {
-  return await Account.find();
+  return await Account.find(
+    {}, {"hash_password": 0,"salt_password": 0});
 };
 const deleteAccountById = async (id) => {
   return await Account.findByIdAndDelete(id);
