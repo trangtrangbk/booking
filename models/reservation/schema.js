@@ -5,13 +5,29 @@ const hotelSchema = new Schema({
     type: Schema.Types.ObjectId,
     required: true,
   },
+  hotelId: {
+    type: Schema.Types.ObjectId,
+    required: true,
+  },
+  cancelReason : {
+    type : String
+  },
   customer : { type: String, require: true },
   email: {
     type: String,
     required: true,
   },
+  guests : {
+    type : Object
+  },
+  code : {
+    type : String
+  },
   phone: {
     type: String,
+  },
+  note : {
+    type : String
   },
   checkIn : {
     type : Date
@@ -24,7 +40,7 @@ const hotelSchema = new Schema({
     required : true
   },
   status : {
-    type : Number,
+    type : String,
     required : true
   },
   created: { type: Date, default: Date.now },
