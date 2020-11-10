@@ -7,10 +7,20 @@ const { InternalServerError } = require("../../utils/ResponseHelper");
 const get = async (req, res) => {
   try {
     const filter = JSON.parse(req.query.filter || "{}");
-    const { hotelId, status, room, checkInFrom,checkInTo, checkOutFrom,checkOutTo } = filter;
-    let filterObj = {
-      hotelId : hotelId
+    const { hotelId, status, room, checkInFrom,checkInTo, checkOutFrom,checkOutTo,customerId } = filter;
+    let filterObj = {}
+    if(customerId) {
+      filterObj = {
+        customerId : customerId
+      }
     }
+    else {
+      filterObj = {
+        hotelId : hotelId
+      }
+    
+    }
+
     if(status.length > 0) {
       filterObj = {
         ...filterObj,
@@ -52,6 +62,7 @@ const get = async (req, res) => {
       }
     }
 
+    console.log({filterObj});
     let arr = await getReservations(filterObj);
     res.send(arr);
   } catch (e) {

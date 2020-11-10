@@ -17,8 +17,6 @@ const accountSchema = new Schema({
     required: true,
   },
   status: { type: Boolean, default: true },
-  created: { type: Date, default: Date.now },
-  updated: { type: Date, default: Date.now },
-});
+},{ timestamps: true });
 
 module.exports = accountSchema;

@@ -12,7 +12,7 @@ const hotelSchema = new Schema({
   cancelReason : {
     type : String
   },
-  customer : { type: String, require: true },
+  customerId : { type: String},
   email: {
     type: String,
     required: true,
@@ -43,8 +43,6 @@ const hotelSchema = new Schema({
     type : String,
     required : true
   },
-  created: { type: Date, default: Date.now },
-  updated: { type: Date, default: Date.now },
-});
+},{ timestamps: true });
 
 module.exports = hotelSchema;

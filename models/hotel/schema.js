@@ -32,8 +32,6 @@ const hotelSchema = new Schema({
   rate: {
     type: Number,
   },
-  created: { type: Date, default: Date.now },
-  updated: { type: Date, default: Date.now },
-});
+},{ timestamps: true });
 
 module.exports = hotelSchema;

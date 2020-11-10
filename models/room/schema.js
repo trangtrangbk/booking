@@ -28,9 +28,7 @@ const roomSchema = new Schema({
     {
       type: String,
     },
-  ],
-  created: { type: Date, default: Date.now },
-  updated: { type: Date, default: Date.now },
-});
+  ]
+},{ timestamps: true });
 
 module.exports = roomSchema;
