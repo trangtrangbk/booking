@@ -30,6 +30,7 @@ const hashPasswordOfAccount = (account) => {
     name: account.name,
     hash_password: hashPassword,
     avatar : account.avatar,
+    linked : account.linked,
     salt_password: saltPassword,
     status: true,
   };
@@ -38,7 +39,7 @@ const hashPasswordOfAccount = (account) => {
 
 const getAccountFromBodyRequest = (req) => {
   if (!req.body) return null;
-  let { email, name, password, avatar } = req.body;
+  let { email, name, password, avatar,linked } = req.body;
   if (email && password) {
     email = email.trim();
     name = name.trim();
@@ -46,7 +47,7 @@ const getAccountFromBodyRequest = (req) => {
     if (email == "" || name == "" || password == "") {
       return null;
     }
-    return { email, name, password,avatar };
+    return { email, name, password,avatar,linked };
   } else {
     return null;
   }

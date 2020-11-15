@@ -50,6 +50,24 @@ const requiredHotelOwner = async (req, res, next) => {
   });
 };
 
+
+const requiredAccOwner = async (req, res, next) => {
+  requiredLogin(req, res, async () => {
+    try {
+      const {id} = req.params
+      if (req.decoded.id == id) {
+        next();
+      } else {
+        return Forbidden(res, "This action requires owner!");
+      }
+    } catch (e) {
+      console.log(e);
+      InternalServerError(res);
+    }
+  });
+};
+
+
 // const requiredAdmin = async (req, res, next) => {
 //   console.log('requiredAdmin')
 //   requiredLogin(req, res, async () => {
@@ -68,4 +86,4 @@ const requiredHotelOwner = async (req, res, next) => {
 //   });
 // };
 
-module.exports = { requiredLogin, requiredHotelOwner};
+module.exports = { requiredLogin, requiredHotelOwner, requiredAccOwner};

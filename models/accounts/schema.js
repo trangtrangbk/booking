@@ -7,6 +7,9 @@ const accountSchema = new Schema({
     unique: true,
   },
   avatar: { type: String },
+  linked : {type : Boolean},
+  phone : {type: String},
+  address : {type : String},
   name: { type: String, require: true },
   hash_password: {
     type: String,

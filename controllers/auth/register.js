@@ -13,7 +13,6 @@ const { getHashString, getRandomString } = require("../../utils/HashHelper");
 
 const EXISTED_ACCOUNT = "This account existed";
 
-
 const register = async (req, res) => {
   const {check, isAdmin, role} = req;
   if(check && !isAdmin) return res.status(405).json({msg: 'The role is not authorized to create admin'})
@@ -42,6 +41,7 @@ const getResponseObject = (account, userInfo) => {
   return {
     name:account.name,
     email:account.email,
+    linked : account.linked,
     isAdmin:account.isAdmin,
     role:account.role,
     join_date: account.createdDay
@@ -49,12 +49,14 @@ const getResponseObject = (account, userInfo) => {
 };
 
 const hashPasswordOfAccount = (account) => {
+  console.log({account});
   const saltPassword = getRandomString();
   const hashPassword = getHashString(account.password, saltPassword);
   const accountData = {
     email:account.email,
     name: account.name,
     isAdmin:account.isAdmin,
+    linked : account.linked,
     role:account.role,
     hash_password: hashPassword,
     salt_password: saltPassword,
@@ -65,7 +67,7 @@ const hashPasswordOfAccount = (account) => {
 
 const getAccountFromBodyRequest = (req)=> {
   if (!req.body) return null;
-  let { email, name, password } = req.body;
+  let { email, name, password, linked } = req.body;
   if (email && password) {
     email=email.trim();
     name = name.trim();
@@ -73,7 +75,8 @@ const getAccountFromBodyRequest = (req)=> {
     if (email==""|| name==""||password == "") {
       return null;
     }
-    return { email, name,password};
+    console.log(req.body);
+    return { email, name,password, linked};
   } else {
     return null;
   }

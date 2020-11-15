@@ -21,13 +21,13 @@ const get = async (req, res) => {
     
     }
 
-    if(status.length > 0) {
+    if(status && status.length > 0) {
       filterObj = {
         ...filterObj,
         status : status
       }
     }
-    if(room.length > 0){
+    if(room && room.length > 0){
       filterObj = {
         ...filterObj,
         roomId : room

@@ -12,7 +12,7 @@ var http = require('http');
  * Get port from environment and store in Express.
  */
 
-var port = normalizePort(process.env.PORT || '3001');
+var port = normalizePort(process.env.PORT || '3006');
 app.set('port', port);
 
 /**
@@ -20,7 +20,15 @@ app.set('port', port);
  */
 
 var server = http.createServer(app);
+const io = require("socket.io")(server)
 
+io.on("connection", socket => {
+  socket.on("push-notif", notification => {
+    // insert notification
+    console.log("notification:" ,notification);
+    io.sockets.emit("push-notif", notification)
+  })
+})
 /**
  * Listen on provided port, on all network interfaces.
  */
