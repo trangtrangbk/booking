@@ -6,6 +6,7 @@ const {
   BadRequest,
   InternalServerError,
 } = require("../../utils/ResponseHelper");
+const sendMail = require("../../services/mailService").sendMail;
 
 const update = async (req, res) => {
   const bodyData = req.body;
