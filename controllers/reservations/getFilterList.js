@@ -1,7 +1,5 @@
 const _ = require("lodash");
 const { getReservations } = require("../../services/reservationService");
-const { getRoom } = require("../../services/roomService");
-const moment = require("moment");
 const { InternalServerError } = require("../../utils/ResponseHelper");
 
 const get = async (req, res) => {
@@ -14,7 +12,7 @@ const get = async (req, res) => {
         customerId : customerId
       }
     }
-    else {
+    else if(hotelId) {
       filterObj = {
         hotelId : hotelId
       }
@@ -62,7 +60,6 @@ const get = async (req, res) => {
       }
     }
 
-    console.log({filterObj});
     let arr = await getReservations(filterObj);
     res.send(arr);
   } catch (e) {

@@ -49,7 +49,6 @@ const getResponseObject = (account, userInfo) => {
 };
 
 const hashPasswordOfAccount = (account) => {
-  console.log({account});
   const saltPassword = getRandomString();
   const hashPassword = getHashString(account.password, saltPassword);
   const accountData = {
@@ -75,7 +74,6 @@ const getAccountFromBodyRequest = (req)=> {
     if (email==""|| name==""||password == "") {
       return null;
     }
-    console.log(req.body);
     return { email, name,password, linked};
   } else {
     return null;
