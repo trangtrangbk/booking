@@ -7,7 +7,7 @@ const get = async (req, res) => {
     const {id} = req.params
     let arr = await getHotel({_id : id});
     const rooms = await getRooms({hotelId : arr._id})
-    res.send({...arr._doc, rooms});
+    res.send({...arr._doc, rooms: rooms.length, });
   } catch (e) {
     console.log(e);
     InternalServerError(res);

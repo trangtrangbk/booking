@@ -4,8 +4,9 @@ const { InternalServerError } = require("../../utils/ResponseHelper");
 
 const get = async (req, res) => {
   try {
-    const filter = JSON.parse(req.query.filter ||"{}");
-    let arr = await getRooms(filter);
+    const filter = JSON.parse(req.query.filter || "{}");
+    const { limit, offset } = JSON.parse(req.query.setting || "{}");
+    let arr = await getRooms(filter, limit, offset);
     res.send(arr);
   } catch (e) {
     console.log(e);
