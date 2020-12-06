@@ -6,7 +6,7 @@ const {
   InternalServerError,
   Unauthorized
 } = require("../../utils/ResponseHelper"); 
-const { getAccountByEmail } = require("../../services/accountService");
+const { getAdmin } = require("../../services/adminService");
 
 const DefNoRememberTime = config.DEF_EXP_SHORT;
 const DefRememberTime = config.DEF_EXP_LONG;
@@ -17,7 +17,7 @@ const login = async (req, res) => {
   let { email, password, remember,  } = req.body;
   if (!email || !password) return BadRequest(res);
   try {
-    const account = await getAccountByEmail(email);
+    const account = await getAdmin({email});
     if (account && isMatchPassword(account, password)) {
       if(!account.status) return Unauthorized(res, LockedUser);
       if(account.isAdmin===false) return BadRequest(res);
@@ -34,7 +34,7 @@ const login = async (req, res) => {
 //Support function
 const createToken = (user, expireTime = DefNoRememberTime) => {
   return jwt.sign(
-    { name: user.name, id: user._id, email: user.email, isAdmin:user.isAdmin, role: user.role },
+    { name: user.name, id: user._id, email: user.email, isAdmin:true, role: user.role },
     config.SECRET_WORD,
     {
       expiresIn: expireTime

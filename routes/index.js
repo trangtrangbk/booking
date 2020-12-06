@@ -1,6 +1,7 @@
-const { requiredLogin } = require("../middlewares/auth");
+const {requiredAdmin } = require("../middlewares/auth");
 const app = require("express")();
 
+app.use("/admins",requiredAdmin, require("../controllers/admins").router);
 app.use("/accounts", require("../controllers/accounts").router);
 app.use("/hotels",require("../controllers/hotels").router);
 app.use("/rooms", require("../controllers/rooms").router);
