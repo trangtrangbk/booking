@@ -3,7 +3,7 @@ const config = require("../config");
 const {
   Forbidden,
   InternalServerError,
-  Unauthorized
+  Unauthorized,
 } = require("../utils/ResponseHelper");
 const LockedUser = "you are blocked, please contact admin for more detail!";
 const { getAccount } = require("../services/accountService");
@@ -22,9 +22,9 @@ const requiredLogin = (req, res, next) => {
           return Unauthorized(res, "Invalid Token!");
         }
         req.decoded = decoded;
-        let user = await getAccount({_id :decoded.id});
-        if(decoded.isAdmin) {
-          user =  await getAdmin({_id :decoded.id});
+        let user = await getAccount({ _id: decoded.id });
+        if (decoded.isAdmin) {
+          user = await getAdmin({ _id: decoded.id });
         }
         if (!user.status) return Unauthorized(res, LockedUser);
         next();
@@ -38,13 +38,18 @@ const requiredLogin = (req, res, next) => {
 
 const requiredHotelOwner = async (req, res, next) => {
   requiredLogin(req, res, async () => {
-
     try {
-      const hotel = await getHotel({_id : req.body.hotelId || req.query.hotelId})
-      if (req.decoded.id == hotel.accountId) {
+      if (req.decoded.id === req.query.userId) {
         next();
       } else {
-        return Forbidden(res, "This action requires owner!");
+        const hotel = await getHotel({
+          _id: req.body.hotelId || req.query.hotelId || req.params.id,
+        });
+        if (req.decoded.id == hotel.accountId) {
+          next();
+        } else {
+          return Forbidden(res, "This action requires owner!");
+        }
       }
     } catch (e) {
       console.log(e);
@@ -53,11 +58,10 @@ const requiredHotelOwner = async (req, res, next) => {
   });
 };
 
-
 const requiredAccOwner = async (req, res, next) => {
   requiredLogin(req, res, async () => {
     try {
-      const {id} = req.params
+      const { id } = req.params;
       if (req.decoded.id == id) {
         next();
       } else {
@@ -70,22 +74,26 @@ const requiredAccOwner = async (req, res, next) => {
   });
 };
 
-
 const requiredAdmin = async (req, res, next) => {
-  console.log('requiredAdmin')
+  console.log("requiredAdmin");
   requiredLogin(req, res, async () => {
     try {
       const { isAdmin } = req.decoded;
-      if (isAdmin===true) {
+      if (isAdmin === true) {
         next();
       } else {
         return Forbidden(res, "This action requires admin role!");
       }
     } catch (e) {
-      console.log("REQUIRED ADMIN ERROR", e);  
+      console.log("REQUIRED ADMIN ERROR", e);
       InternalServerError(res);
     }
   });
 };
 
-module.exports = { requiredLogin, requiredHotelOwner, requiredAccOwner, requiredAdmin};
+module.exports = {
+  requiredLogin,
+  requiredHotelOwner,
+  requiredAccOwner,
+  requiredAdmin,
+};
