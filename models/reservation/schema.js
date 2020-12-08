@@ -26,6 +26,12 @@ const hotelSchema = new Schema({
   phone: {
     type: String,
   },
+  name: {
+    type: String,
+  },
+  address: {
+    type: String,
+  },
   note : {
     type : String
   },
