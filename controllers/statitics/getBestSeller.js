@@ -7,7 +7,8 @@ const get = async (req, res) => {
   try {
     const accountId=req.query.userId;
     const hotel = await Hotel.findOne({accountId})
-    const rooms = await Room.find({hotelId : hotel._id})
+    if(hotel) {
+      const rooms = await Room.find({hotelId : hotel._id})
     const listArr = [];
     rooms.forEach(r => {
       listArr.push(Reservation.countDocuments({hotelId: hotel._id, roomId : r._id}))
@@ -16,6 +17,10 @@ const get = async (req, res) => {
       res.send({categories : rooms.map(r => r.name),data : response });
 
     }).catch(e => console.log(e))
+    }
+    else {
+      res.send({categories: [], data: []})
+    }
   } catch (e) {
     console.log(e);
     InternalServerError(res);

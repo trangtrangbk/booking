@@ -10,9 +10,12 @@ const getByMonth = async (req, res) => {
     const year = req.query.year;
     console.log({ year });
     const hotel = await Hotel.findOne({ accountId });
-    const result = await countNewsByMonth(hotel._id, year);
-
-    res.send(result);
+    if(hotel) {
+      const result = await countNewsByMonth(hotel._id, year);
+      res.send(result);
+    }
+    else
+    res.send({year : "2020", data : []});
   } catch (error) {
     console.log(error);
     InternalServerError(res);
