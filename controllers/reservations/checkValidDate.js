@@ -20,7 +20,6 @@ const checkValid = async (req, res) => {
 
     let reservations = await getReservations({roomId})
     reservations = reservations.filter(r => r.status !== "canceled")
-    valid = true;
     reservations.forEach(r =>{
       const start = moment(r.checkIn).format('YYYY-MM-DD')
       const end =  moment(r.checkOut).format('YYYY-MM-DD')

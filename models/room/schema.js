@@ -6,6 +6,7 @@ const roomSchema = new Schema({
     required: true,
   },
   name: { type: String, require: true },
+  prepay: { type: Number, require: true },
   status: {
     type: String,
   },
