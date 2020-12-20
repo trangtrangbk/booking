@@ -9,8 +9,13 @@ const getRoom = async (params) => {
   return await Room.findOne(params);
 };
 
-const getRooms = async (filter = {},limit, offset) => {
-  return rooms = await Room.find(filter).skip(offset).limit(limit);
+const getRooms = async (filter = {},limit, offset,sort) => {
+  const count = await Room.count(filter)
+  const rooms =  await Room.find(filter).sort(sort).skip(offset).limit(limit);
+  return {
+    rooms,
+    count
+  }
 }
 const deleteRoomById = async (id) => {
   return await Room.findByIdAndDelete(id);

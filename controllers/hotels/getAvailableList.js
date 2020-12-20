@@ -40,17 +40,16 @@ const groupBy = function(xs, key) {
 };
 const get = async (req, res) => {
   try {
-    const filter = JSON.parse(req.query.filter || "{}");
     const { limit, offset, checkIn, checkOut } = JSON.parse(
       req.query.setting || "{}"
     );
-    let rooms = await getRooms(filter);
+    let rooms = await getRooms();
     const validArr = [];
     const validRooms = [];
-    rooms.forEach((room) => validArr.push(checkValid(checkIn,checkOut,room._id)));
+    rooms.rooms.forEach((room) => validArr.push(checkValid(checkIn,checkOut,room._id)));
     Promise.all(validArr).then(_validArr =>{
       _validArr.forEach((valid,index)=>{
-        if(valid) validRooms.push(rooms[index])
+        if(valid) validRooms.push(rooms.rooms[index])
       })
       res.send(groupBy(validRooms,"hotelId"))
     }).catch(err => {

@@ -10,7 +10,7 @@ const getHotel = async (params) => {
 };
 
 const getHotels = async (filter = {},limit, offset) => {
-  const count = await Hotel.count({})
+  const count = await Hotel.count(filter)
   const hotels =  await Hotel.find(filter).skip(offset).limit(limit);
   return {
     hotels,
