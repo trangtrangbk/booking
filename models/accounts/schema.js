@@ -7,6 +7,7 @@ const accountSchema = new Schema({
     unique: true,
   },
   avatar: { type: String },
+  paypalId: { type: String },
   linked : {type : Boolean},
   phone : {type: String},
   address : {type : String},
